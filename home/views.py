@@ -14,100 +14,50 @@ from django.http import JsonResponse
 
 
 def home(request):
-    # # print the first title from DB
-    # tittle = Contents.objects.first().title
-    # # print all the title from DB
-    # tittle2 = list(Contents.objects.values_list('title', flat=True))
-    # print(tittle)
-    # print(tittle2)
-    category = request.GET.get('category')
     search_query = request.GET.get('searchpost')
+    all_post = Contents.objects.all().order_by('-uploaded_at')
 
-    if category:
-        all_post = Contents.objects.filter(category__name=category).order_by('-uploaded_at')
-        
+    if search_query:
+        all_post = all_post.filter(title__icontains=search_query)
 
-    elif search_query:
-        all_post = Contents.objects.filter(title__icontains=search_query).order_by('-uploaded_at')
-    else:
-        
-        all_post = Contents.objects.all().order_by('-uploaded_at')
-
-    if request.method == 'GET':
-        posttitle = request.GET.get('searchpost')
-        if posttitle != None :
-            all_post = Contents.objects.filter(title__icontains = posttitle)
-        elif posttitle =='' or posttitle=='#':
-            all_post = Contents.objects.all().order_by('-uploaded_at')
-
-    # filter_nm_exmpl = list(Contents.objects.values_list('title', flat=True))
-
-
-    # ----- Available Category Name -----------
-    cat = list(set(Contents.objects.values_list('category__name', flat=True)))
-    # print(cat)
+    cat = list(set(Contents.objects.values_list('categories__name', flat=True)))
     
-    # ---------- x -----------
-
-
-    #------ LOGIC FOR FILTER OUT THE POPULER POSTS OF EACH CATEGORY ------
-   
     top_posts = []
-    
     for category in cat:
-        top_post = Contents.objects.filter(category__name=category).order_by('-views').first()
-
-        top_posts.append(top_post)
-    
-    
-    # print(top_posts)
-
-    # ------------------------------  X ---------------------------------
-
-    for post in top_posts:
-        post.total_comments = Comment.objects.filter(content=post).count()
-
-        # ---------LOGIC To see get the PURE description and calculate time ----------
-        descript_text = post.descript
-        lenis = descript_text.replace(' ', '')
-        # print(lenis)
-        to_read = str((len(lenis) * (15/100)/60)).split('.')
-        timeneeds = (f"{to_read[0]}.{(to_read[1])[:1]} min")
-        
-        
-        # (*** THIS WAY ANOTHER MODELS VALUE OR OWN MODEL VALUE CAN CALCULATE AND NEWLY PASS TO EACH POSTS . IMP***)
-        
-        post.read_time = timeneeds
+        top_post = Contents.objects.filter(categories__name=category).order_by('-views').first()
+        if top_post:
+            top_post.total_comments = Comment.objects.filter(content=top_post).count()
+            descript_text = top_post.descript
+            lenis = descript_text.replace(' ', '')
+            to_read = str((len(lenis) * (15/100)/60)).split('.')
+            timeneeds = f"{to_read[0]}.{(to_read[1])[:1]} min"
+            top_post.read_time = timeneeds
+            top_posts.append(top_post)
 
     for post in all_post:
         post.total_comments = Comment.objects.filter(content=post).count()
 
     paginator = Paginator(all_post, 20)
-
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     e_d = {}
     for item in cat:
-        count = Contents.objects.filter(category__name=item).order_by('-uploaded_at').count()
+        count = Contents.objects.filter(categories__name=item).order_by('-uploaded_at').count()
         e_d[item] = count
 
-    # -- checking if dictiory print perfect or not --
-    # for item, count in e_d.items():
-    #     print(item, count)
+    mymsg = list(MsgFromAdmin.objects.all()[:2]) if MsgFromAdmin.objects.exists() else []
 
-    try:
-        mymsg = list(MsgFromAdmin.objects.all()[:2])
-    except:
-        mymsg = []
-
-    try:
-        mymsg = list(MsgFromAdmin.objects.all()[:2])
-    except:
-        mymsg = []
-
-    # Fetch Music of the Day
     music_of_day = MusicOfDay.objects.first()
+
+    podcast_category = get_object_or_404(Category, name='podcast')
+    podcast_contents = Contents.objects.filter(categories=podcast_category).order_by('-uploaded_at')
+
+    interview_category = get_object_or_404(Category, name='interviews')
+    interview_contents = Contents.objects.filter(categories=interview_category).order_by('-uploaded_at')
+
+    Indie_Pop_Playlist_category = get_object_or_404(Category, name='Indie_Pop_Playlist')
+    Indie_Pop_Playlist_contents = Contents.objects.filter(categories=Indie_Pop_Playlist_category).order_by('-uploaded_at')
 
     home_content = {
         "page_obj": page_obj,
@@ -116,14 +66,13 @@ def home(request):
         "headlinetoday": mymsg[0] if mymsg else None,
         "msgtwo": mymsg[1] if len(mymsg) > 1 else None,
         "music_of_day": music_of_day,
+        "podcast_contents": podcast_contents,
+        "interview_contents":interview_contents,
+        "Indie_Pop_Playlist_contents":Indie_Pop_Playlist_contents,
+
     }
 
-
-    
-    return render(request, "home.html", context=home_content  )
-
-
-
+    return render(request, "home.html", context=home_content)
 # DONE
 def Registration(request):
     if request.user.is_authenticated:

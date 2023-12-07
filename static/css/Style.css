@@ -31,36 +31,36 @@
     justify-content: center;
     margin-top: 30px;
   }
-  
+
   .logo {
     width: 225px;
     text-align: center;
     margin: 10px;
   }
-  
+
   .logo img {
     width: 80px;
     height: 80px;
     object-fit: cover;
     border-radius: 50%;
   }
-  
+
   .logo h4 {
     margin-top: 5px;
     font-size: 14px;
   }
-  
+
   @media (max-width: 768px) {
     .logo {
       width: 100px;
     }
-  
+
     .logo img {
       width: 60px;
       height: 60px;
     }
   }
-  
+
 
 
 
@@ -166,16 +166,16 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     color: rgb(187, 216, 224);
   }
-  
+
 .post-info span {
     margin-right: 10px;
     font-size: 14px;
   }
-  
+
 .post-info span i {
     margin-right: 5px;
   }
-  
+
 .thumbnail1 {
     width: 100%;
     overflow: hidden;
@@ -218,7 +218,7 @@
         object-fit: cover;
     }
     .card {
-       
+
         margin-top: 5vw;
     }
     .thumbnail {
@@ -240,7 +240,7 @@ h2 {
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 
   }
-  
+
 
 
 p {
@@ -283,7 +283,7 @@ p {
 
 
 .srch-form input {
-    
+
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 20px;
@@ -316,19 +316,19 @@ p {
 
 /* ---------------- Global Classes ---------------*/
 
-  
+
 a{
     text-decoration: none;
     color: var(--text-gray);
     color: #daa701;
     font-family: 'Courier New', Courier, monospace;
     text-shadow: -1px -1px 0 #11062c, 1px -1px 0 #d4d4d4, -1px 1pxrgb(255, 255, 255)000, 1px 1px 0 #b6fdff;
-  
+
 }
 
 .flex-row{
     display: flex;
-    flex-direction: row;    
+    flex-direction: row;
     flex-wrap: wrap;
 }
 
@@ -423,13 +423,16 @@ p{
         height: 30vh;
         width:80vw;
         background: contain no-repeat;
-        
+
+     }
+     .music-heading{
+         font-size:5vw;
      }
   }
 
 .nav{
     background: rgba(106, 106, 106, 0.8);
-    
+
     /* font-family: 'poppins','Courier New', Courier, monospace; */
     padding: 0 2rem;
     height: 2rem;
@@ -439,7 +442,7 @@ p{
     padding-bottom: 20px;
 }
 
-.nav .nav-menu{    
+.nav .nav-menu{
     justify-content: space-between;
 }
 
@@ -548,7 +551,7 @@ p{
     display: flex;
     align-items: center;
   }
-  
+
   .nav .search-form .frm-imp {
     padding: 0.6rem 0.8rem;
     border: none;
@@ -556,7 +559,7 @@ p{
     font-size: 1rem;
     font-family: 'Segoe UI', 'Poppins', sans-serif;
   }
-  
+
   .nav .search-form button {
     padding: 0.6rem 1rem;
     border: none;
@@ -567,20 +570,20 @@ p{
     font-family: 'Segoe UI', 'Poppins', sans-serif;
     cursor: pointer;
   }
-  
+
   .nav .search-form button:hover {
     background-color: #a98c00;
   }
-  
+
   .nav .nav-items {
     display: flex;
     align-items:end;
   }
-  
+
   .nav .nav-items > *:not(.search-form) {
     margin-left: 0rem;
   }
-  
+
 /* -------x------- navbar ---------x------- */
 
 
@@ -655,7 +658,7 @@ main .blog{
 }
 
 main .blog .blog-post{
-    padding-top: 6rem;
+    padding-top: 3rem;
     width:100vw !important;
 }
 
@@ -718,7 +721,7 @@ main .site-content{
 
 main .post-content{
     width: 100%;
-    
+
 }
 
 main .site-content .post-content > .post-image, .post-title{
@@ -787,7 +790,7 @@ main .post-content .post-title a{
 /* --------------- Sidebar ----------------------- */
 
 .site-content > .sidebar .category-list{
-    font-family: var(--Livvic);   
+    font-family: var(--Livvic);
 }
 
 .site-content > .sidebar .category-list .list-items{
@@ -801,12 +804,12 @@ main .post-content .post-title a{
 }
 @media (max-width: 768px) {
     .site-content > .sidebar .category-list{
-        margin:0vw 10vw 0vw 10vw;   
+        margin:0vw 10vw 0vw 10vw;
     }
     .site-content > .sidebar .category-list .list-items{
-      
+
         width: 70%;
-       
+
     }
 }
 
@@ -981,7 +984,7 @@ footer.footer .move-up span:hover{
     }
 
     footer.footer .container{
-         grid-template-columns: repeat(3, 1fr); 
+         grid-template-columns: repeat(3, 1fr);
     }
 
 }
@@ -994,7 +997,7 @@ footer.footer .move-up span:hover{
     .nav .nav-menu, .nav .nav-items{
         flex-direction: column;
         height:0.5vh;
-        
+
     }
     .nav{
     }

@@ -10,7 +10,7 @@ class MusicOfDayAdmin(admin.ModelAdmin):
     list_display = ('slug', 'image',)
 @admin.register(Contents)
 class SeeContents(admin.ModelAdmin):
-    list_display = ['user','slug','title','uploaded_at','updated_at','category','likes','dislikes','views','descript','picture','slug',]
+    list_display = ['user','slug','title','uploaded_at','updated_at','likes','dislikes','views','descript','picture','slug',]
     # fields='__all__'
 # Register the model with the custom admin class
 

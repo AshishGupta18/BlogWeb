@@ -23,28 +23,28 @@ class Category(models.Model):
         return self.name
 
 class Contents(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True) 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=300, unique=True, null=True, blank=True, default='')
     descript = RichTextField(blank=True, null=True)
     uploaded_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     picture = models.ImageField(upload_to="blog_thumb/", null=True, default='no_thumb.png')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='contents')
+    categories = models.ManyToManyField(Category, related_name='contents', blank=True)
     likes = models.PositiveIntegerField(default=0)
     dislikes = models.PositiveIntegerField(default=0)
     views = models.PositiveIntegerField(default=0)
     article_of_the_day = models.BooleanField(default=False)  # New field
 
     def save(self, *args, **kwargs):
-        if not self.slug:  
+        if not self.slug:
             self.slug = custom_slugify(self.title)
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
 
-    
+
 
 class Comment(models.Model):
     content = models.ForeignKey(Contents, on_delete=models.CASCADE)

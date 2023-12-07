@@ -72,12 +72,12 @@ cat_choose = Category.objects.all().values_list('name', 'name')
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Contents
-        fields = ['title', 'descript',  'category', 'picture',]
+        fields = ['title', 'descript',  'categories', 'picture',]
         labels = {'descript': 'Description', 'picture': 'Thumbnail'}
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'descript': forms.Textarea(attrs={'class': 'form-outline'}),
-            'category': forms.Select( attrs={'class': 'form-select'}),
+            'categories': forms.Select( attrs={'class': 'form-select'}),
             'picture': forms.FileInput( attrs={'class': 'form-control'}),
         }
 
